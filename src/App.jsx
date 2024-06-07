@@ -3,7 +3,7 @@
 import './App.scss'
 
 function App() {
-  return <></>
+  return <>Hello mulish font</>
 }
 
 export default App
