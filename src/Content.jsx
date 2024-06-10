@@ -44,7 +44,9 @@ function Content({ selectBook }) {
           <SearchBar
             books={data?.books.map((b, i) => ({ ...b, id: `book_${i}` }))}
             selectBook={(b, a) => {
-              selectBook(b)
+              if (window.innerWidth > 900) {
+                selectBook(b)
+              }
               addToList(b, a)
             }}
           />
