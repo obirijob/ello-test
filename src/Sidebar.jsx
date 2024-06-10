@@ -3,7 +3,7 @@
 import React from 'react'
 import StyleRoundedIcon from '@mui/icons-material/StyleRounded'
 
-function Sidebar({ book }) {
+function Sidebar({ book, closeSidebar }) {
   return (
     <div className="side-bar">
       <div style={{ display: 'flex', marginBottom: 10 }}>
@@ -20,6 +20,7 @@ function Sidebar({ book }) {
         perspiciatis voluptas et reiciendis.
       </p>
       <p style={{ textAlign: 'right' }}> - {book.author}</p>
+      <button onClick={closeSidebar}>Close</button>
     </div>
   )
 }

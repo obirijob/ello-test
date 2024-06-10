@@ -42,7 +42,12 @@ function App() {
       <div className="content">
         <Content selectBook={setSelectedBook} />
       </div>
-      {selectedBook && <Sidebar book={selectedBook} />}
+      {selectedBook && (
+        <Sidebar
+          book={selectedBook}
+          closeSidebar={() => setSelectedBook(null)}
+        />
+      )}
     </div>
   )
 }
