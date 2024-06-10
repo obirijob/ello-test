@@ -1,12 +1,14 @@
 /** @format */
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 
 import './searchbar.scss'
+import { ReadingListContext } from '../contexts/ReadingList'
 
 function SearchBar({ books, selectBook }) {
+  const { readingList } = useContext(ReadingListContext)
   const [showDropdown, setShowDropdown] = useState(false)
   const [searchStr, setSearchStr] = useState('')
 
@@ -47,7 +49,7 @@ function SearchBar({ books, selectBook }) {
         <SearchRoundedIcon />
         <input
           type="search"
-          placeholder="Search for a book"
+          placeholder="Search for a book and click to add to list"
           onFocus={() => setShowDropdown(true)}
           value={searchStr}
           onChange={e => {
@@ -60,13 +62,21 @@ function SearchBar({ books, selectBook }) {
         <div className="search-dropdown" ref={ref}>
           {
             <RenderBooks
-              books={books.filter(
-                b =>
-                  b.title.toLowerCase().includes(searchStr.toLowerCase()) ||
-                  b.author.toLowerCase().includes(searchStr.toLowerCase())
-              )}
+              books={books
+                .filter(b => {
+                  const isIn = readingList.findIndex(r => r.id == b.id)
+                  if (isIn < 0) {
+                    return true
+                  }
+                  return false
+                })
+                .filter(
+                  b =>
+                    b.title.toLowerCase().includes(searchStr.toLowerCase()) ||
+                    b.author.toLowerCase().includes(searchStr.toLowerCase())
+                )}
               setShowDropdown={setShowDropdown}
-              selectBook={selectBook}
+              selectBook={b => selectBook(b, books)}
             />
           }
         </div>
@@ -77,8 +87,9 @@ function SearchBar({ books, selectBook }) {
 
 function RenderBooks({ books, setShowDropdown, selectBook }) {
   return books.length > 0 ? (
-    books.map(b => (
+    books.map((b, i) => (
       <BookItem
+        key={`search_${i}`}
         book={b}
         onSelect={() => {
           setShowDropdown(false)

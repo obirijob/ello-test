@@ -1,11 +1,12 @@
 /** @format */
 
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import { gql, useQuery } from '@apollo/client'
 import SearchBar from './components/SearchBar'
 
 import './content.scss'
+import { ReadingListContext } from './contexts/ReadingList'
 
 function Content({ selectBook }) {
   const { loading, error, data } = useQuery(gql`
@@ -19,19 +20,49 @@ function Content({ selectBook }) {
     }
   `)
 
+  const { readingList, setReadingList, setAllBooks } =
+    useContext(ReadingListContext)
+
+  function addToList(book, allBooks) {
+    const isInIndex = readingList.findIndex(b => b.id === book.id)
+    if (isInIndex < 0) {
+      setReadingList([...readingList, book])
+    }
+    setAllBooks(allBooks)
+  }
+
+  function removeBook(book) {
+    setReadingList(readingList.filter(b => b.id !== book.id))
+  }
+
   return (
     <div>
       {loading && <>Loading Books</>}
       {error && <>Error loading books</>}
       {data && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 30 }}>
-          <SearchBar books={data?.books} selectBook={selectBook} />
-          <h2>Books Portal</h2>
+          <SearchBar
+            books={data?.books.map((b, i) => ({ ...b, id: `book_${i}` }))}
+            selectBook={(b, a) => {
+              selectBook(b)
+              addToList(b, a)
+            }}
+          />
+          <h2>Reading List</h2>
           <div className="books-grid">
-            {data?.books.map(b => (
-              <div className="book-item" onClick={() => selectBook(b)}>
+            {readingList.map(b => (
+              <div
+                key={b.title}
+                className="book-item"
+                onClick={() => {
+                  selectBook(b)
+                }}
+              >
                 <img src={b.coverPhotoURL} alt="" />
                 <p>{b.title}</p>
+                <button className="danger-bt" onClick={() => removeBook(b)}>
+                  Remove
+                </button>
               </div>
             ))}
           </div>

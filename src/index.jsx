@@ -9,6 +9,7 @@ import reportWebVitals from './reportWebVitals'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
+import { ReadingListContextProvider } from './contexts/ReadingList'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
@@ -20,7 +21,9 @@ const gqlClient = new ApolloClient({
 root.render(
   <React.StrictMode>
     <ApolloProvider client={gqlClient}>
-      <App />
+      <ReadingListContextProvider>
+        <App />
+      </ReadingListContextProvider>
     </ApolloProvider>
   </React.StrictMode>
 )

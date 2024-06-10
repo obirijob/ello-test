@@ -16,6 +16,7 @@
   }
 
   .book-item {
+    position: relative;
     // background-color: $turquoise;
     min-width: 200px;
     height: 300px;
@@ -36,8 +37,30 @@
       margin-top: 20px;
     }
 
+    button {
+      position: absolute;
+      bottom: 20px;
+      transition: 0.3s ease-in-out;
+      color: $white;
+      background-color: $orange-red;
+      border-radius: 5px;
+      padding: 5px 20px;
+      border: none;
+      opacity: 0;
+      pointer-events: none;
+      border: solid 1px $orange-red;
+    }
+
     &:hover {
       transform: scale(1.05);
+      button {
+        opacity: 1;
+        pointer-events: all;
+        &:hover {
+          background-color: $white;
+          color: $orange-red;
+        }
+      }
     }
   }
 }
