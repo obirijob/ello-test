@@ -62,7 +62,13 @@ function Content({ selectBook }) {
               >
                 <img src={b.coverPhotoURL} alt="" />
                 <p>{b.title}</p>
-                <button className="danger-bt" onClick={() => removeBook(b)}>
+                <button
+                  className="danger-bt"
+                  onClick={e => {
+                    e.stopPropagation()
+                    removeBook(b)
+                  }}
+                >
                   Remove
                 </button>
               </div>
