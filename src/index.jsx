@@ -14,7 +14,7 @@ import { ReadingListContextProvider } from './contexts/ReadingList'
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
 const gqlClient = new ApolloClient({
-  uri: 'http://192.168.1.12:4000',
+  uri: 'http://localhost:4000',
   cache: new InMemoryCache()
 })
 
