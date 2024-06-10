@@ -6,10 +6,22 @@ import './index.scss'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 
+import 'bootstrap/dist/css/bootstrap.min.css'
+
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
+
 const root = ReactDOM.createRoot(document.getElementById('root'))
+
+const gqlClient = new ApolloClient({
+  uri: 'http://192.168.1.12:4000',
+  cache: new InMemoryCache()
+})
+
 root.render(
   <React.StrictMode>
-    <App />
+    <ApolloProvider client={gqlClient}>
+      <App />
+    </ApolloProvider>
   </React.StrictMode>
 )
 

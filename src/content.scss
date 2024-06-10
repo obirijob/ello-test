@@ -1,0 +1,43 @@
+/** @format */
+
+@import './App.scss';
+
+.books-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  max-height: 80vh;
+  overflow: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+
+  .book-item {
+    // background-color: $turquoise;
+    min-width: 200px;
+    height: 300px;
+    flex: 1;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+    transition: 0.3s ease-in-out;
+
+    img {
+      width: 100%;
+      height: 70%;
+      border-radius: 5px;
+      box-shadow: transparentize(black, 0.5) 5px 5px 10px;
+      object-fit: cover;
+    }
+    p {
+      margin-top: 20px;
+    }
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
